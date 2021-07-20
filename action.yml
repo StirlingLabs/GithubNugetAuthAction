@@ -1,0 +1,27 @@
+name: 'GitHub NuGet Private Source Authentication'
+description: 'Authenticates a private GitHub NuGet package source, so you can restore packages.'
+
+branding:
+  icon: "lock"
+  color: "blue"
+
+inputs:
+  repository-owner:
+    description: "Owner of the NuPkg repository you would like to authenticate against, as displayed in their GitHub URL."
+    required: false
+    default: "Owner of the repository the Action is running within."
+  token:
+    description: "Personal Access Token with permission to read packages."
+    required: true
+
+runs:
+  
+  using: "composite"
+  
+  steps: 
+    - shell: bash
+      run: ${{ github.action_path }}/action.sh
+      env:
+        repository_owner: "${{inputs.repository-owner}}"
+        this_repo_owner: "${{github.repository_owner}}"
+        token: "${{inputs.token}}"
