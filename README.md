@@ -11,7 +11,7 @@
 
 ```yaml
       - name: Authorise NuGet
-        uses: StirlingLabs/GithubNugetAuthAction@master
+        uses: StirlingLabs/GithubNugetAuthAction@main
         with:
           owner: ${{github.repository_owner}}
           token: ${{secrets.NUGET_PAT}}
