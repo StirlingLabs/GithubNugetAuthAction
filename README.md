@@ -1,5 +1,7 @@
 # 🔓 GitHub NuPkg Source Authorisation Action
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a75ea2af278f4d88bc71cc8ca2cae6e6)](https://www.codacy.com/gh/StirlingLabs/GithubNugetAuthAction/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=StirlingLabs/GithubNugetAuthAction&amp;utm_campaign=Badge_Grade)
+
 > Authorises access to a private GitHub NuGet package source, so you can restore packages.
 
 ## ⚠️ Warning
