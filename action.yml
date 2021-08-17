@@ -6,10 +6,14 @@ branding:
   color: "blue"
 
 inputs:
-  repository-owner:
+  owner:
     description: "The owner of the NuPkg repository you would like to access, as displayed in their GitHub URL."
     required: false
     default: "Owner of the repository the Action is running within."
+  name:
+    description: "The name of the NuPkg source"
+    required: false
+    default: "Github-$repository-owner"
   token:
     description: "Personal Access Token with permission to read packages."
     required: true
@@ -23,4 +27,5 @@ runs:
       run: ${{ github.action_path }}/action.sh
       env:
         owner: "${{inputs.owner}}"
+        name: "${{inputs.name}}"
         token: "${{inputs.token}}"

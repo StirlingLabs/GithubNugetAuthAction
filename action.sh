@@ -1,3 +1,4 @@
+#!/bin/bash
 
 main(){
 	if [[ ! -f ~/NuGet.config ]]; then
@@ -6,6 +7,12 @@ main(){
 	
 	if [[ "$owner" -eq "" ]]; then
 		owner=${GITHUB_REPOSITORY%%/*}	
+		echo "Warning: owner defaulting to $owner"
+	fi
+
+	if [[ "$name" == "" ]]; then
+		name=GitHub-$owner
+		echo "Warning: source name defaulting to $name"
 	fi
 
 	if [[ "$token" == "" ]]; then
@@ -15,11 +22,11 @@ main(){
 
 	echo "Authenticating to $repository_owner NuPkg Source" > /dev/stderr
 
-	dotnet nuget add source https://nuget.pkg.github.com/$owner/index.json \
+	dotnet nuget add source "https://nuget.pkg.github.com/$owner/index.json" \
 		--configfile ~/NuGet.Config \
-    	-n GitHub-$owner \
-        -u $owner \
-        -p $token \
+    	-n "$name" \
+        -u "$owner" \
+        -p "$token" \
         --store-password-in-clear-text
 }
 
