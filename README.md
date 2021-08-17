@@ -6,6 +6,7 @@
 
 - This Action writes the PAT value to disk in plain text... because NuGet requires that on linux.
 - Please ensure that you scope the PAT to only read packages *and that you are prepared to accept the risk of the PAT escaping*.
+- The name of the source will be `GitHub-${{github.repository_owner}}`.
 
 ## 🚀 Quickstart
 
