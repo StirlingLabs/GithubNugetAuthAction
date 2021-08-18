@@ -25,7 +25,7 @@ runs:
   
   steps: 
     - shell: bash
-      run: ${{ github.action_path }}/action.sh
+      run: "\"${{ github.action_path }}/action.sh\""
       env:
         owner: "${{inputs.owner}}"
         name: "${{inputs.name}}"
