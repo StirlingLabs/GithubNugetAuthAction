@@ -58,12 +58,20 @@ runs:
 
         echo "Authenticating to $owner NuPkg Source"
 
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+          configfile="$APPDATA\NuGet\NuGet.Config"
+          extra_args=
+        else
+          configfile=~/NuGet.Config
+          extra_args=--store-password-in-clear-text
+        fi
+
         dotnet nuget add source "https://nuget.pkg.github.com/$owner/index.json" \
-            --configfile ~/NuGet.Config \
+            --configfile $configfile \
             -n "$name" \
             -u "$owner" \
             -p "$token" \
-            --store-password-in-clear-text
+            $extra_args
       env:
         env_token: ${{ inputs.token }}
         DOTNET_NOLOGO: "1"
