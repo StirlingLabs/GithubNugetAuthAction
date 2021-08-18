@@ -15,6 +15,7 @@ main(){
         echo "Note: source name defaulting to $name"
     fi
 
+    echo $token >> wc -c
     if [[ "$token" -eq "" ]]; then
         token=$GITHUB_TOKEN
         echo "Note: using github token."
