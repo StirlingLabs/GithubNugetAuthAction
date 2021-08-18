@@ -25,10 +25,9 @@ runs:
     - shell: bash
       run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
-          "D:\a\_actions\StirlingLabs\GithubNugetAuthAction\action.sh"
-          "\"D:\\a\\_actions\\StirlingLabs\\GithubNugetAuthAction\\action.sh\""
+          "${{ github.action_path }}\\action.sh"
         else
-          /home/runner/work/_actions/StirlingLabs/GithubNugetAuthAction/action.sh
+          "${{ github.action_path }}/action.sh"
         fi
       env:
         owner: "${{inputs.owner}}"
