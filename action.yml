@@ -16,16 +16,21 @@ inputs:
     default: "Github-${{ github.repository_owner }}"
   token:
     description: "Personal Access Token with permission to read packages."
-    required: true
-    default: ${{ github.token }}
+    required: false
 
 runs:
   
   using: "composite"
   
   steps: 
-    - shell: bash
-      run: "\"${{ github.action_path }}/action.sh\""
+    - name: Unix
+      shell: bash
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          "$SHELL" "${{ github.action_path }}\\action.sh"
+        else
+          "$SHELL" "${{ github.action_path }}/action.sh"
+        fi
       env:
         owner: "${{inputs.owner}}"
         name: "${{inputs.name}}"
