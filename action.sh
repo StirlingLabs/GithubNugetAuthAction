@@ -27,7 +27,7 @@ main(){
     	-n "$name" \
         -u "$owner" \
         -p "$token" \
-        --store-password-in-clear-text
+        --store-password-in-clear-text \
 		--nologo
 }
 

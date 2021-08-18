@@ -17,6 +17,7 @@ inputs:
   token:
     description: "Personal Access Token with permission to read packages."
     required: false
+    default: ${{ github.token }}
 
 runs:
   
@@ -27,11 +28,12 @@ runs:
       shell: bash
       run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
-          "$SHELL" "${{ github.action_path }}\\action.sh"
+          "${{ github.action_path }}\\action.sh"
         else
-          "$SHELL" "${{ github.action_path }}/action.sh"
+          "${{ github.action_path }}/action.sh"
         fi
       env:
         owner: "${{inputs.owner}}"
         name: "${{inputs.name}}"
         token: "${{inputs.token}}"
+        GITHUB_TOKEN: ${{ github.token }}
