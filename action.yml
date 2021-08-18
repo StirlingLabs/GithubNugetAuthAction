@@ -8,70 +8,31 @@ branding:
 inputs:
   owner:
     description: "The owner of the NuPkg repository you would like to access, as displayed in their GitHub URL."
-    required: true
-    default: "${{ github.repository_owner }}"
+    required: false
+    default: ${{ github.repository_owner }}
   name:
     description: "The name of the NuPkg source"
-    required: true
+    required: false
     default: "GitHub-${{ github.repository_owner }}"
   token:
     description: "Personal Access Token with permission to read packages."
     required: true
-    default: "${{ github.token }}"
+    default: ${{ github.token }}
 
 runs:
-  using: "composite"  
+  using: "composite"
   steps: 
-    - name: Execute action bash script
-      shell: bash
+    - shell: bash
       run: |
-        if [[ ! -f ~/NuGet.config ]]; then
-            echo '<?xml version="1.0" encoding="utf-8"?><configuration/>' > ~/NuGet.Config
-        fi
-
-        owner=${{ inputs.owner }}
-        echo owner $owner "$owner"
-        name=${{ inputs.name }}
-        echo $name
-        echo "$name"
-        token=${{ inputs.token }}
-        echo $token | wc -c
-        GITHUB_TOKEN=${{ github.token }}
-        echo $GITHUB_TOKEN | wc -c
-        echo env token
-        echo $env_token | wc -c
-
-        if [[ "$owner" == "" ]]; then
-            owner=${GITHUB_REPOSITORY%%/*}	
-            echo "Note: owner defaulting to $owner"
-        fi
-
-        if [[ "$name" == "" ]]; then
-            name=GitHub-$owner
-            echo "Note: source name defaulting to $name"
-        fi
-
-        if [[ "$token" == "" ]]; then
-            token=$GITHUB_TOKEN
-            echo "Note: using github token."
-        fi
-
-        echo "Authenticating to $owner NuPkg Source"
-
-        if [[ "$RUNNER_OS" == "Windows" ]]; then
-          configfile="$APPDATA\NuGet\NuGet.Config"
-          extra_args=
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          "D:\a\_actions\StirlingLabs\GithubNugetAuthAction\action.sh"
+          "\"D:\\a\\_actions\\StirlingLabs\\GithubNugetAuthAction\\action.sh\""
         else
-          configfile=~/NuGet.Config
-          extra_args=--store-password-in-clear-text
+          /home/runner/work/_actions/StirlingLabs/GithubNugetAuthAction/action.sh
         fi
-
-        dotnet nuget add source "https://nuget.pkg.github.com/$owner/index.json" \
-            --configfile $configfile \
-            -n "$name" \
-            -u "$owner" \
-            -p "$token" \
-            $extra_args
       env:
-        env_token: ${{ inputs.token }}
+        owner: "${{inputs.owner}}"
+        name: "${{inputs.name}}"
+        token: "${{inputs.token}}"
+        GITHUB_TOKEN: ${{github.token}}
         DOTNET_NOLOGO: "1"
