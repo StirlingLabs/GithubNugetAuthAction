@@ -10,12 +10,12 @@ main(){
 		echo "Warning: owner defaulting to $owner"
 	fi
 
-	if [[ "$name" == "" ]]; then
+	if [[ "$name" -eq "" ]]; then
 		name=GitHub-$owner
 		echo "Warning: source name defaulting to $name"
 	fi
 
-	if [[ "$token" == "" ]]; then
+	if [[ "$token" -eq "" ]]; then
 		echo "Error: token must be set." > /dev/stderr
 		exit 1
 	fi
