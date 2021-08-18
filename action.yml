@@ -9,14 +9,15 @@ inputs:
   owner:
     description: "The owner of the NuPkg repository you would like to access, as displayed in their GitHub URL."
     required: false
-    default: "Owner of the repository the Action is running within."
+    default: ${{ github.repository_owner }}
   name:
     description: "The name of the NuPkg source"
     required: false
-    default: "Github-$repository-owner"
+    default: "Github-${{ github.repository_owner }}"
   token:
     description: "Personal Access Token with permission to read packages."
     required: true
+    default: ${{ github.token }}
 
 runs:
   
