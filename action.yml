@@ -37,3 +37,4 @@ runs:
         name: "${{inputs.name}}"
         token: "${{inputs.token}}"
         GITHUB_TOKEN: ${{ github.token }}
+        DOTNET_NOLOGO: "1"
