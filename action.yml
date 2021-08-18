@@ -9,32 +9,61 @@ inputs:
   owner:
     description: "The owner of the NuPkg repository you would like to access, as displayed in their GitHub URL."
     required: true
-    default: ${{ github.repository_owner }}
+    default: "${{ github.repository_owner }}"
   name:
     description: "The name of the NuPkg source"
     required: true
-    default: "Github-${{ github.repository_owner }}"
+    default: "GitHub-${{ github.repository_owner }}"
   token:
     description: "Personal Access Token with permission to read packages."
     required: true
-    default: ${{ github.token }}
+    default: "${{ github.token }}"
 
 runs:
-  
-  using: "composite"
-  
+  using: "composite"  
   steps: 
-    - name: Unix
+    - name: Execute action bash script
       shell: bash
       run: |
-        if [ "$RUNNER_OS" == "Windows" ]; then
-          "${{ github.action_path }}\\action.sh"
-        else
-          "${{ github.action_path }}/action.sh"
+        if [[ ! -f ~/NuGet.config ]]; then
+            echo '<?xml version="1.0" encoding="utf-8"?><configuration/>' > ~/NuGet.Config
         fi
+
+        owner=${{ inputs.owner }}
+        echo owner $owner "$owner"
+        name=${{ inputs.name }}
+        echo $name
+        echo "$name"
+        token=${{ inputs.token }}
+        echo $token | wc -c
+        GITHUB_TOKEN=${{ github.token }}
+        echo $GITHUB_TOKEN | wc -c
+        echo env token
+        echo $env_token | wc -c
+
+        if [[ "$owner" == "" ]]; then
+            owner=${GITHUB_REPOSITORY%%/*}	
+            echo "Note: owner defaulting to $owner"
+        fi
+
+        if [[ "$name" == "" ]]; then
+            name=GitHub-$owner
+            echo "Note: source name defaulting to $name"
+        fi
+
+        if [[ "$token" == "" ]]; then
+            token=$GITHUB_TOKEN
+            echo "Note: using github token."
+        fi
+
+        echo "Authenticating to $owner NuPkg Source"
+
+        dotnet nuget add source "https://nuget.pkg.github.com/$owner/index.json" \
+            --configfile ~/NuGet.Config \
+            -n "$name" \
+            -u "$owner" \
+            -p "$token" \
+            --store-password-in-clear-text
       env:
-        owner: "${{inputs.owner}}"
-        name: "${{inputs.name}}"
-        token: "${{inputs.token}}"
-        GITHUB_TOKEN: ${{ github.token }}
+        env_token: ${{ inputs.token }}
         DOTNET_NOLOGO: "1"
