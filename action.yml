@@ -8,23 +8,23 @@ branding:
 inputs:
   owner:
     description: "The owner of the NuPkg repository you would like to access, as displayed in their GitHub URL."
-    required: false
-    default: ${{ github.repository_owner }}
+    required: true
+    default: "${{ github.repository_owner }}"
   name:
     description: "The name of the NuPkg source"
-    required: false
+    required: true
     default: "Github-${{ github.repository_owner }}"
   token:
     description: "Personal Access Token with permission to read packages."
-    required: false
-    default: ${{ github.token }}
+    required: true
+    default: "${{ github.token }}"
 
 runs:
   
   using: "composite"
   
   steps: 
-    - name: Unix
+    - name: Execute action bash script
       shell: bash
       run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
@@ -33,8 +33,8 @@ runs:
           "${{ github.action_path }}/action.sh"
         fi
       env:
-        owner: "${{inputs.owner}}"
-        name: "${{inputs.name}}"
-        token: "${{inputs.token}}"
-        GITHUB_TOKEN: ${{ github.token }}
+        owner: "${{ inputs.owner }}"
+        name: "${{ inputs.name }}"
+        token: "${{ inputs.token }}"
+        GITHUB_TOKEN: "${{ github.token }}"
         DOTNET_NOLOGO: "1"
