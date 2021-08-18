@@ -8,15 +8,15 @@ branding:
 inputs:
   owner:
     description: "The owner of the NuPkg repository you would like to access, as displayed in their GitHub URL."
-    required: false
+    required: true
     default: ${{ github.repository_owner }}
   name:
     description: "The name of the NuPkg source"
-    required: false
+    required: true
     default: "Github-${{ github.repository_owner }}"
   token:
     description: "Personal Access Token with permission to read packages."
-    required: false
+    required: true
     default: ${{ github.token }}
 
 runs:
