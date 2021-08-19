@@ -5,8 +5,6 @@ main(){
 		echo '<?xml version="1.0" encoding="utf-8"?><configuration/>' > ~/NuGet.Config
 	fi
 
-	echo $token | wc -c
-
 	if [[ "$owner" == "" ]]; then
 		owner=${GITHUB_REPOSITORY%%/*}	
 		echo "Note: owner defaulting to $owner"

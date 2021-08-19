@@ -24,12 +24,11 @@ runs:
   steps: 
     - shell: bash
       run: |
-        script_path=${{ github.action_path }}
-        last_part=${script_path##*/}
-        if [[ "$last_part" == "main" ]]; then
-          full_path="${script_path%$last_part}"
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          bash "${{ github.action_path }}\\action.sh"
+        else
+          bash ${{ github.action_path }}/action.sh
         fi
-        "\"$script_path/action.sh\""
       env:
         owner: "${{inputs.owner}}"
         name: "${{inputs.name}}"
