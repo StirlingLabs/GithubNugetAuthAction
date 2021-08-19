@@ -29,7 +29,7 @@ runs:
         if [[ "$last_part" == "main" ]]; then
           full_path="${script_path%$last_part}"
         fi
-        "$script_path/action.sh"
+        "\"$script_path/action.sh\""
       env:
         owner: "${{inputs.owner}}"
         name: "${{inputs.name}}"
