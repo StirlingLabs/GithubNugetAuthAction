@@ -37,6 +37,6 @@ runs:
         owner: "${{inputs.owner}}"
         name: "${{inputs.name}}"
         token: "${{inputs.token}}"
-        force-cleartext-storage: "${{inputs.force-cleartext-storage}}"
+        force_cleartext_storage: "${{inputs.force-cleartext-storage}}"
         GITHUB_TOKEN: ${{github.token}}
         DOTNET_NOLOGO: "1"
