@@ -18,6 +18,10 @@ inputs:
     description: "Personal Access Token with permission to read packages."
     required: true
     default: ${{ github.token }}
+  force-cleartext-storage:
+    description: "Personal Access Token with permission to read packages."
+    required: false
+    default: true
 
 runs:
   using: "composite"
@@ -33,5 +37,6 @@ runs:
         owner: "${{inputs.owner}}"
         name: "${{inputs.name}}"
         token: "${{inputs.token}}"
+        force-cleartext-storage: "${{inputs.force-cleartext-storage}}"
         GITHUB_TOKEN: ${{github.token}}
         DOTNET_NOLOGO: "1"
