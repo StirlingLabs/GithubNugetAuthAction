@@ -24,7 +24,11 @@ main(){
 
 	if [[ "$RUNNER_OS" == "Windows" ]]; then
 		configfile="$APPDATA\NuGet\NuGet.Config"
-		extra_args=
+		if [[ "$force_cleartext_storage" == "true" ]] || [[ -z "$force_cleartext_storage" ]]; then
+			extra_args=--store-password-in-clear-text
+		else
+			extra_args=
+		fi
 	else
 		configfile=~/NuGet.Config
 		extra_args=--store-password-in-clear-text
